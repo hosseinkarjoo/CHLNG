@@ -1,1 +1,7 @@
-import flask as Flask
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/helloworld')
+def helloworld():
+    return 'Hello, World!'
