@@ -20,4 +20,13 @@ def helloworld():
 def versionz():
   #getting the latest git hash
   git_hash = subprocess.run(['git', 'rev-parse', 'HEAD'], stdout=subprocess.PIPE)
-  return git_hash.stdout.decode('utf-8')
+  githash = git_hash.stdout.decode('utf-8').strip()
+  #current directory for repo name
+  pwd_cm = subprocess.run(['pwd'], stdout=subprocess.PIPE)
+  pwd = pwd_cm.stdout.decode('utf-8')
+  project_name = pwd.split("/")
+  #create a list from data
+  cur_dir = project_name[-1].strip()
+  dict_versionz = {'LatestGitHash': githash, 'ProjectName': cur_dir}
+
+  return json.dumps(dict_versionz)
