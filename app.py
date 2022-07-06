@@ -30,3 +30,8 @@ def versionz():
   dict_versionz = {'LatestGitHash': githash, 'ProjectName': cur_dir}
 
   return json.dumps(dict_versionz)
+
+logging.basicConfig(
+    format="%(asctime)s %(message)s",
+    datefmt="%Y-%m-%dT%H:%M:%S%z"
+)
