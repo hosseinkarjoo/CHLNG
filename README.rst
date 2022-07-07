@@ -2,6 +2,7 @@ Install & RUN
 --------------------------------------------
 - Clone the repository
 - cd CHLNG
+- git checkout http-service
 - pip install -r requirements.txt
 - flask run
 
