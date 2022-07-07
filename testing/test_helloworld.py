@@ -18,3 +18,8 @@ def test_helloworld_name(client):
     assert isinstance(resp.json, dict)
     assert resp.json.get('message', 'Hello Hossein Karjoo')
 
+def test_versionz(client):
+    resp = client.get('/versionz')
+    assert resp.status_code == 200
+    assert isinstance(resp.json, dict)
+    assert resp.json.get('message', "{\"LatestGitHash\": githash, \"ProjectName\": cur_dir}")
