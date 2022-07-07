@@ -10,11 +10,11 @@ import logging
 def helloworld():
 #  Name = request.args.get('name')
   if request.args.get('name') is None:
-    return {'message':'Hello Stranger'}
+    return 'Hello Stranger'
   else:
     Name = request.args.get('name')
     Name = re.sub("([a-z])([A-Z])","\g<1> \g<2>", Name)
-    return {'message': 'Hello '+Name}
+    return 'Hello '+Name
 
 @app.route('/versionz')
 def versionz():
