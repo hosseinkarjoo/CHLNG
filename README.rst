@@ -1,18 +1,13 @@
-Install & RUN
+Build & RUN
 --------------------------------------------
-- Clone the repository
-- cd CHLNG
-- git checkout http-service
-- pip install -r requirements.txt
-- flask run
+- docker build -t flask:latest .
+- docker container run -d --name flask-app -p 8080:8080 flask 
 
 Variables
 --------------------------------------------
-- You can see and change the default vars from .flaskenv file
-- to Override set this environment variables:
-  FLASK_RUN_PORT, FLASK_RUN_HOST
+- Default variables are in .flaskenv
+- to Override do: docker container run -d --name flask-app -p 8080:8090 -e FLASK_RUN_PORT=8090 flask
 
 Running Tests
 --------------------------------------------
-- to run Unit test for all routes:
-  pytest
+- docker container exec flask-app pytest
