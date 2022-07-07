@@ -14,4 +14,4 @@ Variables
 Running Tests
 --------------------------------------------
 - to run Unit test for all routes:
-  pytest testing/test-heloworld.py
+  pytest
