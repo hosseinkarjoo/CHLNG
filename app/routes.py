@@ -22,9 +22,9 @@ def versionz():
   git_hash = subprocess.run(['git', 'rev-parse', 'HEAD'], stdout=subprocess.PIPE)
   githash = git_hash.stdout.decode('utf-8').strip()
   #get repo name
-  project_name = subprocess.run(['git, 'config', '--get', 'remote.origin.url'], stdout=subprocess.PIPE)
+  project_name = subprocess.run(['git', 'config', '--get', 'remote.origin.url'], stdout=subprocess.PIPE)
   #create a list from data
-  cur_dir = project_name.strip()
+  cur_dir = project_name.stdout.decode('utf-8').strip()
   dict_versionz = {'LatestGitHash': githash, 'ProjectName': cur_dir}
 
   return {'message': json.dumps(dict_versionz)}
