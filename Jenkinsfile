@@ -32,9 +32,9 @@ pipeline {
         stage ('Push Image to DockerHub') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'hub_credentialsId') {
-                        hosseinkarjoo/flask.push("${BUILD_NUMBER}")
-                        hosseinkarjoo/flask.push("latest")
+                    withDockerRegistry([ credentialsId: "hub_credentialsId", url: "https://registry.hub.docker.com" ]) {
+                        sh'docker push hosseinkarjoo/flask:${BUILD_NUMBER}'
+                        sh'docker push hosseinkarjoo/flask:latest'
                     }
                 }
             }
