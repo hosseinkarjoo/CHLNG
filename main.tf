@@ -183,19 +183,6 @@ resource "aws_instance" "bastion" {
   }
 }
 
-resource "aws_instance" "jenkins" {
-  ami  = data.aws_ami.amzn-linux-ec2.id
-  instance_type = "t3.medium"
-  key_name = aws_key_pair.sh-key-for-me.key_name
-  associate_public_ip_address = true
-  vpc_security_group_ids = [aws_security_group.public.id]
-  subnet_id = aws_subnet.public_subnet.id
-  tags = {
-    Name = "jenkins"
-
-  }
-}
-
 
 resource "aws_instance" "worker" {
   count = 3
@@ -239,8 +226,6 @@ data "template_file" "inventory" {
 
     bastion-pub = "${aws_instance.bastion.public_ip}"
 
-    jenkins-pub = "${aws_instance.jenkins.public_ip}"
-    jenkins-prv = "${aws_instance.jenkins.private_ip}"
 
     master-prv = "${aws_instance.master.private_ip}"
     bastion-prv = "${aws_instance.bastion.private_ip}"

@@ -1,5 +1,5 @@
 ---
-- hosts: jenkins
+- hosts: bastion
   become: yes
   remote_user: ec2-user
   become_user: root
@@ -11,8 +11,9 @@
       vars:
         package:
         - wget
-        - java-1.8.0-openjdk-devel
         - git
+    - name: instal java11
+      shell: amazon-linux-extras install java-openjdk11 -y
 
     - name: Setup Jenkins Repo
       get_url:

@@ -3,6 +3,12 @@
 read -p 'access_key: ' AK
 read -p 'secret_key: ' SK
 
+cat << EOF > /etc/ssh/ssh_config
+Host *
+   StrictHostKeyChecking no
+   UserKnownHostsFile=/dev/null
+EOF
+
 echo 'PATH=$PATH:/usr/local/bin' >> ~/.bashrc && source ~/.bashrc
 if which terraform
 then
@@ -86,7 +92,7 @@ sed -i "s|SECRET-KEY|$SK|g" ./variables.tf
 if [ ! -d  ~/.aws]; then
   mkdir ~/.aws
 fi
-cp aws_creds ~/.aws/credentialsi
+cp aws_creds ~/.aws/credentials
 
 echo "DONE installing reqs"
 
@@ -98,4 +104,6 @@ terraform apply -auto-approve
 MASTER0ID=$(terraform state show aws_instance.master | grep id | head -n 1 | awk '{print $3}' | sed 's/\"//g' )
 aws ec2 wait instance-status-ok --region us-east-1 --instance-ids $MASTER0ID  && echo "master is ready"
 
+ansible-playbook -i inventory.ini ansible_jenkins.yml
+ansible-playbook -i inventory.ini ansible_k8s_cluster.yml
 
