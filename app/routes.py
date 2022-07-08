@@ -26,7 +26,7 @@ def versionz():
   pwd = pwd_cm.stdout.decode('utf-8')
   project_name = pwd.split("/")
   #create a list from data
-  cur_dir = project_name[-2].strip()
+  cur_dir = project_name[-1].strip()
   dict_versionz = {'LatestGitHash': githash, 'ProjectName': cur_dir}
 
   return {'message': json.dumps(dict_versionz)}
