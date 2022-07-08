@@ -1,0 +1,172 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+provider "aws" {
+  region     = "us-east-1"
+  access_key = var.access_key
+  secret_key = var.secret_key
+}
+
+resource "aws_vpc" "main_VPC" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+  tags = {
+    Name = "k8s-cluster"
+  }
+}
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main_VPC.id
+}
+
+resource "aws_subnet" "public_subnet" {
+  availability_zone = "us-east-1a"
+  vpc_id = aws_vpc.main_VPC.id
+  cidr_block = "10.0.1.0/24"
+  map_public_ip_on_launch = true
+}
+
+
+resource "aws_route_table" "public_table" {
+  vpc_id = aws_vpc.main_VPC.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+  tags = {
+    Name = "main-table"
+  }
+}
+
+resource "aws_route_table_association" "public" {
+  route_table_id = aws_route_table.public_table.id
+  subnet_id= aws_subnet.public_subnet.id
+}
+
+
+
+
+resource "aws_eip" "Nat-Gateway-EIP" {
+  vpc = true
+}
+
+resource "aws_nat_gateway" "NAT_GW" {
+  allocation_id = aws_eip.Nat-Gateway-EIP.id
+  subnet_id = aws_subnet.public_subnet.id
+  tags = {
+    Name = "Nat-GW"
+  }
+}
+
+resource "aws_route_table" "worker_table" {
+  vpc_id = aws_vpc.main_VPC.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.NAT_GW.id
+  }
+  tags = {
+    Name = "workers-table"
+  }
+}
+
+
+
+resource "aws_route_table_association" "private" {
+  route_table_id = aws_route_table.worker_table.id
+  subnet_id = aws_subnet.worker_subnet.id
+}
+
+resource "aws_subnet" "worker_subnet" {
+  availability_zone = "us-east-1a"
+  vpc_id = aws_vpc.main_VPC.id
+  cidr_block = "10.0.2.0/24"
+  map_public_ip_on_launch = false
+}
+
+
+
+
+
+resource "aws_security_group" "public" {
+  vpc_id = aws_vpc.main_VPC.id
+  ingress {
+    cidr_blocks = [ "0.0.0.0/0" ]
+    protocol = "tcp"
+    from_port = 22
+    to_port = 22
+  }
+  ingress {
+    description = "allow anyone on port 8080"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "allow anyone on port 8090"
+    from_port   = 8090
+    to_port     = 8090
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+  
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "private" {
+  vpc_id = aws_vpc.main_VPC.id
+
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+
+
+resource "aws_key_pair" "sh-key-for-me" {
+  key_name = "My_Key"
+  public_key = file("/root/.ssh/id_rsa.pub")
+}
+
+data "aws_ami" "amzn-linux-ec2" {
+  most_recent = true
+  owners = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
+  }
+}
+
+
+
