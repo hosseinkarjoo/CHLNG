@@ -46,5 +46,10 @@ pipeline {
                 sh'docker container rm  flask --force'
             }
         }
+        stage('run deployment'){
+            steps{
+                sh'sudo kubectl apply -f flask.yml '
+            }
+        }
     }
 }
