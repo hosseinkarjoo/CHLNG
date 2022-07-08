@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "cloud.canister.io:5000/hosseinkarjoo/flask"
+        registry = "584197209529.dkr.ecr.us-east-1.amazonaws.com/flask"
     }
     stages {
         stage('Clone Git Project') {
@@ -35,11 +35,15 @@ pipeline {
         stage ('Push Image to DockerHub') {
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: "hub_credentialsId", url: "http://registry.hub.docker.com" ]) {
                         sh'docker push ${registry}:${BUILD_NUMBER}'
                         sh'docker push ${registry}:latest'
                     }
                 }
+            }
+        }
+        stage('Remove the Docker Container'){
+            steps{
+                sh'docker container rm  flask --force'
             }
         }
     }
