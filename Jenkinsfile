@@ -16,7 +16,7 @@ pipeline {
                 sh''' #!/bin/bash
                         if [ "$(docker ps -q -f name=flask)" ] 
                         then
-                          docker container rm  flaks --foce
+                          docker container rm  flaks --force
                           docker container run -d --name flask flask:latest
                         else
                           docker container run -d --name flask flask:latest
