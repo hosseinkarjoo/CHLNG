@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = cloud.canister.io:5000/hosseinkarjoo/flask
+        registry = "cloud.canister.io:5000/hosseinkarjoo/flask"
     }
     stages {
         stage('Clone Git Project') {
