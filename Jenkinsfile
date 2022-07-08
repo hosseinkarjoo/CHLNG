@@ -29,5 +29,15 @@ pipeline {
                 sh'docker container exec flask pytest'
             }
         }
+        stage ('Push Image to DockerHub') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'hub_credentialsId') {
+                        hosseinkarjoo/flask.push("${BUILD_NUMBER}")
+                        hosseinkarjoo/flask.push("latest")
+                    }
+                }
+            }
+        }
     }
 }
