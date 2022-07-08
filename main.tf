@@ -168,5 +168,65 @@ data "aws_ami" "amzn-linux-ec2" {
   }
 }
 
+###### Instances ######
 
+resource "aws_instance" "bastion" {
+  ami  = data.aws_ami.amzn-linux-ec2.id
+  instance_type = "t3.medium"
+  key_name = aws_key_pair.sh-key-for-me.key_name
+  associate_public_ip_address = true
+  vpc_security_group_ids = [aws_security_group.public.id]
+  subnet_id = aws_subnet.public_subnet.id
+  tags = {
+    Name = "bastion"
+
+  }
+}
+
+resource "aws_instance" "jenkins" {
+  ami  = data.aws_ami.amzn-linux-ec2.id
+  instance_type = "t3.medium"
+  key_name = aws_key_pair.sh-key-for-me.key_name
+  associate_public_ip_address = true
+  vpc_security_group_ids = [aws_security_group.public.id]
+  subnet_id = aws_subnet.public_subnet.id
+  tags = {
+    Name = "jenkins"
+
+  }
+}
+
+
+resource "aws_instance" "worker" {
+  count = 3
+  ami  = data.aws_ami.amzn-linux-ec2.id
+  instance_type = "t3.medium"
+  key_name = aws_key_pair.sh-key-for-me.key_name
+  associate_public_ip_address = false
+  vpc_security_group_ids = [aws_security_group.private.id]
+  iam_instance_profile = "${aws_iam_instance_profile.CSI_profile.name}"
+  subnet_id = aws_subnet.worker_subnet.id
+  tags = {
+    Name = "worker-${count.index}"
+  }
+  root_block_device {
+    volume_size = "16"
+    volume_type = "standard"
+  }
+}
+
+
+resource "aws_instance" "master" {
+  ami  = data.aws_ami.amzn-linux-ec2.id
+  instance_type = "t3.medium"
+  key_name = aws_key_pair.sh-key-for-me.key_name
+  associate_public_ip_address = false
+  vpc_security_group_ids = [aws_security_group.private.id]
+  iam_instance_profile = "${aws_iam_instance_profile.CSI_profile.name}"
+  subnet_id = aws_subnet.worker_subnet.id
+  tags = {
+    Name = "master"
+
+  }
+}
 
