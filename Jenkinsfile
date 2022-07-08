@@ -20,9 +20,9 @@ pipeline {
                         if [ "$(docker ps -qa -f name=flask)" ] 
                         then
                           docker container rm  flask --force
-                          docker container run -d --name flask ${registry}:latest
+                          docker container run -d --name flask -p 8090:8080 ${registry}:latest
                         else
-                          docker container run -d --name flask ${registry}:latest
+                          docker container run -d --name flask -p 8090:8080 ${registry}:latest
                         fi  
                 '''
             }
