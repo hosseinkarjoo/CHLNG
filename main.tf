@@ -230,3 +230,32 @@ resource "aws_instance" "master" {
   }
 }
 
+###### temlating inventory file for ansible######
+
+data "template_file" "inventory" {
+  template = "${file("./tmp/inventory.ini")}"
+  vars = {
+    worker-1-prv = "${aws_instance.worker.0.private_ip}"
+    worker-2-prv = "${aws_instance.worker.1.private_ip}"
+    worker-3-prv = "${aws_instance.worker.2.private_ip}"
+
+    bastion-pub = "${aws_instance.bastion.public_ip}"
+
+    jenkins-pub = "${aws_instance.jenkins.public_ip}"
+    jenkins-prv = "${aws_instance.jenkins.private_ip}"
+
+    master-prv = "${aws_instance.master.private_ip}"
+    bastion-prv = "${aws_instance.bastion.private_ip}"
+
+  }
+}
+
+
+resource "null_resource" "inventory" {
+  triggers = {
+    template_rendered = "${data.template_file.inventory.rendered}"
+  }
+  provisioner "local-exec" {
+    command = "echo '${data.template_file.inventory.rendered}' > ./inventory.ini"
+ }
+}
