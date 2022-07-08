@@ -88,4 +88,14 @@ if [ ! -d  ~/.aws]; then
 fi
 cp aws_creds ~/.aws/credentialsi
 
-echo "DONE"
+echo "DONE installing reqs"
+
+terraform init
+terraform plan
+read -p "looks good?" verif
+terraform apply -auto-approve
+
+MASTER0ID=$(terraform state show aws_instance.master | grep id | head -n 1 | awk '{print $3}' | sed 's/\"//g' )
+aws ec2 wait instance-status-ok --region us-east-1 --instance-ids $MASTER0ID  && echo "master is ready"
+
+

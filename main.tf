@@ -204,7 +204,6 @@ resource "aws_instance" "worker" {
   key_name = aws_key_pair.sh-key-for-me.key_name
   associate_public_ip_address = false
   vpc_security_group_ids = [aws_security_group.private.id]
-  iam_instance_profile = "${aws_iam_instance_profile.CSI_profile.name}"
   subnet_id = aws_subnet.worker_subnet.id
   tags = {
     Name = "worker-${count.index}"
@@ -222,7 +221,6 @@ resource "aws_instance" "master" {
   key_name = aws_key_pair.sh-key-for-me.key_name
   associate_public_ip_address = false
   vpc_security_group_ids = [aws_security_group.private.id]
-  iam_instance_profile = "${aws_iam_instance_profile.CSI_profile.name}"
   subnet_id = aws_subnet.worker_subnet.id
   tags = {
     Name = "master"
