@@ -32,12 +32,6 @@
         name: jenkins
         state: present
 
-    - name: change host ip config.xml
-      replace:
-        path: /var/lib/jenkins/nodes/Slave/config.xml
-        regexp: 'Slave-IP'
-        replace: "{{ BASTION_PRV }}"
-
     - name: Start Jenkins
       service:
         name: jenkins
