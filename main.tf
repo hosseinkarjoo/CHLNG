@@ -175,6 +175,7 @@ resource "aws_instance" "bastion" {
   instance_type = "t3.medium"
   key_name = aws_key_pair.sh-key-for-me.key_name
   associate_public_ip_address = true
+  iam_instance_profile        = aws_iam_instance_profile.profile.name
   vpc_security_group_ids = [aws_security_group.public.id]
   subnet_id = aws_subnet.public_subnet.id
   tags = {
@@ -190,6 +191,7 @@ resource "aws_instance" "worker" {
   instance_type = "t3.medium"
   key_name = aws_key_pair.sh-key-for-me.key_name
   associate_public_ip_address = false
+  iam_instance_profile        = aws_iam_instance_profile.profile.name
   vpc_security_group_ids = [aws_security_group.private.id]
   subnet_id = aws_subnet.worker_subnet.id
   tags = {
@@ -214,6 +216,60 @@ resource "aws_instance" "master" {
 
   }
 }
+
+#####ECR and IAM#####
+resource "aws_ecr_repository" "flask" {
+  name = "flask"
+}
+
+resource "aws_iam_role" "role" {
+  name               = "ec2-role"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": ["ec2.amazonaws.com"]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+
+}
+
+resource "aws_iam_policy" "policy" {
+  name = "ec2-ecr-access-policy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "ecr:*",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_policy_attachment" "attach" {
+  name       = "ec2-ecr-attach"
+  roles      = ["${aws_iam_role.role.name}"]
+  policy_arn = "${aws_iam_policy.policy.arn}"
+}
+
+resource "aws_iam_instance_profile" "profile" {
+  name = "k8s-cluster-ecr"
+  role = aws_iam_role.role.name
+}
+
+
+
 
 ###### temlating inventory file for ansible######
 
