@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Unit-Test'){
             steps{
-                sh'docker container exec flask:latest pytest'
+                sh'docker container exec flask pytest'
             }
         }
     }
