@@ -1,0 +1,46 @@
+---
+- hosts: jenkins
+  become: yes
+  remote_user: ec2-user
+  become_user: root
+  tasks:
+    - name: install dependencies
+      yum:
+        name: "{{ package }} "
+        state: present
+      vars:
+        package:
+        - wget
+        - java-1.8.0-openjdk-devel
+        - git
+
+    - name: Setup Jenkins Repo
+      get_url:
+        url: https://pkg.jenkins.io/redhat/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+    
+    - name: Import Jenkins Repo GPG key
+      rpm_key:
+        state: present
+        key: https://pkg.jenkins.io/redhat/jenkins.io.key
+ 
+    - name: install epel 
+      shell: "amazon-linux-extras install epel -y"
+
+    - name: install Jenkins
+      yum:
+        name: jenkins
+        state: present
+
+    - name: change host ip config.xml
+      replace:
+        path: /var/lib/jenkins/nodes/Slave/config.xml
+        regexp: 'Slave-IP'
+        replace: "{{ BASTION_PRV }}"
+
+    - name: Start Jenkins
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+
