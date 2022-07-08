@@ -6,7 +6,7 @@ Build & RUN
 Variables
 --------------------------------------------
 - Default variables are in .flaskenv
-- to Override do: docker container run -d --name flask-app -p 8080:8090 -e FLASK_RUN_PORT=8090 flask
+- to Override the service port for example do: docker container run -d --name flask-app -p 8080:8090 -e FLASK_RUN_PORT=8090 flask
 
 Running Tests
 --------------------------------------------
