@@ -8,4 +8,6 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-**/.tmp/*
+variables.tf
+variables.tfe
+aws_creds
