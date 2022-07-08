@@ -3,15 +3,15 @@
   become: true
   remote_user: ec2-user
   tasks:
-#    - name: create default profile for aws cli
-#      file:
-#        path: /root/.aws
-#        state: directory
+    - name: create default profile for aws cli
+      file:
+        path: /root/.aws
+        state: directory
 
-#    - name: copy prfile
-#      copy:
-#        src: ./files/aws_creds
-#        dest: /root/.aws/credentials    
+    - name: copy prfile
+      copy:
+        src: aws_creds
+        dest: /root/.aws/credentials    
 
     - name: clear the hosts file
       shell: cat /etc/hosts | head -n 2 | > /etc/hosts
