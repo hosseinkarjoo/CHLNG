@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry([ credentialsId: "hub_credentialsId", url: "https://registry.hub.docker.com" ]) {
-                        sh'docker ${registry}:${BUILD_NUMBER}'
+                        sh'docker push ${registry}:${BUILD_NUMBER}'
                         sh'docker push ${registry}:latest'
                     }
                 }
