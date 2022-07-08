@@ -8,7 +8,7 @@ pipeline {
         }
         stage('build'){
             steps{
-                sh'docker build -t flask:${BUILD_NUMBER} -t flask:latest .'
+                sh'docker build -t hosseinkarjoo/flask:${BUILD_NUMBER} -t hosseinkarjoo/flask:latest .'
             }
         }
         stage('Stage-RUN'){
