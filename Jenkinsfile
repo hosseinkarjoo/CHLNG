@@ -13,12 +13,12 @@ pipeline {
         }
         stage('Stage-RUN'){
             steps{
-                sh'''
-                    if [ "$(docker ps -q -f name=flask)" ]; then
-                      docker container stop flask
-                      docker container run -d --name flask flask:latest
-                    else
-                      docker container run -d --name flask flask:latest
+                sh''' #!/bin/bash
+                        if [ "$(docker ps -q -f name=flask)" ]; then
+                          docker container stop flask
+                          docker container run -d --name flask flask:latest
+                        else
+                          docker container run -d --name flask flask:latest
                 '''
             }
         }
