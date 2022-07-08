@@ -17,7 +17,7 @@ pipeline {
         stage('Stage-RUN'){
             steps{
                 sh''' #!/bin/bash
-                        if [ "$(docker ps -q -f name=flask)" ] 
+                        if [ "$(docker ps -qa -f name=flask)" ] 
                         then
                           docker container rm  flask --force
                           docker container run -d --name flask ${registry}:latest
