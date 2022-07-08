@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        registry = cloud.canister.io:5000/hosseinkarjoo/flask
+    }
     stages {
         stage('Clone Git Project') {
             steps {
@@ -8,7 +11,7 @@ pipeline {
         }
         stage('build'){
             steps{
-                sh'docker build -t hosseinkarjoo/flask:${BUILD_NUMBER} -t hosseinkarjoo/flask:latest .'
+                sh'docker build -t ${registry}:${BUILD_NUMBER} -t ${registry}:latest .'
             }
         }
         stage('Stage-RUN'){
@@ -17,9 +20,9 @@ pipeline {
                         if [ "$(docker ps -q -f name=flask)" ] 
                         then
                           docker container rm  flask --force
-                          docker container run -d --name flask flask:latest
+                          docker container run -d --name flask ${registry}:latest
                         else
-                          docker container run -d --name flask flask:latest
+                          docker container run -d --name flask ${registry}:latest
                         fi  
                 '''
             }
@@ -33,8 +36,8 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry([ credentialsId: "hub_credentialsId", url: "https://registry.hub.docker.com" ]) {
-                        sh'docker push hosseinkarjoo/flask:${BUILD_NUMBER}'
-                        sh'docker push hosseinkarjoo/flask:latest'
+                        sh'docker ${registry}:${BUILD_NUMBER}'
+                        sh'docker push ${registry}:latest'
                     }
                 }
             }
