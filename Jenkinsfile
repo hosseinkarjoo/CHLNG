@@ -35,7 +35,7 @@ pipeline {
         stage ('Push Image to DockerHub') {
             steps {
                 script {
-                    sh'sudo aws ecr get-login-password --region region | docker login --username AWS --password-stdin ${registry}'    
+                    sh'sudo aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}'    
                     sh'docker push ${registry}:${BUILD_NUMBER}'
                     sh'docker push ${registry}:latest'
                 }
