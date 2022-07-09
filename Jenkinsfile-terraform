@@ -49,7 +49,7 @@ pipeline {
         stage('run deployment'){
             steps{
                 sh'cd ./terraform-deploy-k8s && terraform init'
-                sh'cd ./terraform-deploy-k8s && terraform apply -auto-approve'
+                sh'cd ./terraform-deploy-k8s && sudo terraform apply -auto-approve'
             }
         }
     }
