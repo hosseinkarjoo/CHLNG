@@ -65,6 +65,7 @@ else
     sudo yum install python3-pip -y
   fi
   sudo pip3 install awscli
+  sudo mv /usr/local/bin/aws /bin/aws
   if which aws
   then
     echo "AWSCLI IS INSTALLED"
