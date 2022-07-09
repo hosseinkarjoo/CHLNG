@@ -286,6 +286,27 @@
     - name: debug PATH
       debug: 
         var: check_path.stdout
+    - name: download terraform
+      get_url: 
+        url: https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip
+        dest: /usr/local/bin/terraform_1.2.4_linux_amd64.zip
+    - name: unzip terraform
+      unarchive:
+        src: /usr/local/bin/terraform_1.2.4_linux_amd64.zip
+        dest: /usr/local/bin/
+        remote_src: yes
+    - name: move terraform to PATH
+      copy:
+        src: /usr/local/bin/terraform
+        dest: /bin/terraform
+        mode: 0777
+        remote_src: yes
+
+    - name: install terraform
+      yum:
+        name: terraform
+        state: present
+
 
     - name: check for helm existance
       shell: which /usr/local/bin/helm
