@@ -90,7 +90,7 @@ sed -i "s|SECRET-KEY|$SK|g"  ./aws_creds
 sed -i "s/ACCESS-KEY/$AK/g" ./variables.tf
 sed -i "s|SECRET-KEY|$SK|g" ./variables.tf
 
-if [ ! -d  ~/.aws]; then
+if [ ! -d  ~/.aws ]; then
   mkdir ~/.aws
 fi
 cp aws_creds ~/.aws/credentials
