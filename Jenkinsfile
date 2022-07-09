@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "584197209529.dkr.ecr.us-east-1.amazonaws.com/flask"
+        registry = "517432808191.dkr.ecr.us-east-1.amazonaws.com/flask"
     }
     stages {
         stage('Clone Git Project') {
