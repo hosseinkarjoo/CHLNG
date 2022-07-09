@@ -54,7 +54,7 @@ pipeline {
                         then
                           sudo kubectl apply -f flask.yml
                         else
-                          sudo kubectl apply -f flask.yml
+                          sudo kubectl patch -f flask.yml
                         fi
                   '''
             }
