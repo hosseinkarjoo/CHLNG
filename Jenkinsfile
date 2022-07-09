@@ -9,7 +9,7 @@ pipeline {
                 git url: 'https://github.com/hosseinkarjoo/CHLNG.git', branch: 'K8s'
             }
         }
-        stage('build'){
+        stage('build docker image'){
             steps{
                 sh'docker build -t ${registry}:${BUILD_NUMBER} -t ${registry}:latest .'
             }
@@ -32,7 +32,7 @@ pipeline {
                 sh'docker container exec flask pytest'
             }
         }
-        stage ('Push Image to DockerHub') {
+        stage ('Push Image to ECR') {
             steps {
                 script {
                     sh'sudo aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}'    
