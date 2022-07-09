@@ -48,8 +48,8 @@ pipeline {
         }
         stage('run deployment'){
             steps{
-                sh'pwd'
-                sh'sudo kubectl apply -f flask.yml '
+                sh'cd ./terraform-deploy-k8s && terraform init'
+                sh'cd ./terraform-deploy-k8s && sudo terraform apply -auto-approve'
             }
         }
     }
