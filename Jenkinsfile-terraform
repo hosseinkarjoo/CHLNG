@@ -1,4 +1,4 @@
-peline {
+pipeline {
     agent any
     environment {
         registry = "937945817386.dkr.ecr.us-east-1.amazonaws.com/flask"
