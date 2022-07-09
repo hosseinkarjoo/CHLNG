@@ -49,7 +49,13 @@ pipeline {
         stage('run deployment'){
             steps{
                 sh'pwd'
-                sh'sudo kubectl apply -f flask.yml '
+                sh''' #!/bin/bash
+                        if sudo kubectl get deploy flask
+                        then
+                          sudo kubectl update -f flask.yml
+                        else
+                          sudo kubectl apply -f flask.yml
+                  '''
             }
         }
     }
