@@ -12,6 +12,12 @@
         package:
         - wget
         - git
+        
+    - name: Remove Java 8
+      yum:
+        name: java-1.8.0-openjdk.x86_64
+        state: absent
+        
     - name: instal java11
       shell: amazon-linux-extras install java-openjdk11 -y
 
