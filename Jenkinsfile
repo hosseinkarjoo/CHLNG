@@ -52,7 +52,7 @@ pipeline {
                 sh''' #!/bin/bash
                         if sudo kubectl get deploy flask
                         then
-                          sudo kubectl update -f flask.yml
+                          sudo kubectl rollout -f flask.yml
                         else
                           sudo kubectl apply -f flask.yml
                         fi
