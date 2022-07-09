@@ -29,7 +29,7 @@ resource "kubernetes_deployment" "flask" {
 
       spec {
         container {
-          image = "937945817386.dkr.ecr.us-east-1.amazonaws.com/flask:latest"
+          image = "247083573128.dkr.ecr.us-east-1.amazonaws.com/flask:latest"
           name  = "flask"
           port {
             container_port = "8080"
