@@ -11,3 +11,9 @@ output "ECR_registry_address" {
   value = "${aws_ecr_repository.flask.repository_url}" 
 }
 
+output "LB_address" {
+  value = "${aws_elb.app-lb.dns_name}" 
+}
+
+
+
