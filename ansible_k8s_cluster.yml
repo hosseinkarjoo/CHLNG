@@ -306,7 +306,7 @@
     - name: install terraform
       yum:
         name: terraform
-        state: resent
+        state: present
 
     - name: check for helm existance
       shell: which /usr/local/bin/helm
