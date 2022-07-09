@@ -48,8 +48,8 @@ pipeline {
         }
         stage('run deployment'){
             steps{
-                sh'sudo /bin/terraform init'
-                sh'sudo /bin/terraform apply -target=main-k8s-deploy.tf -auto-approve'
+                sh'sudo terraform init'
+                sh'sudo terraform apply -target=main-k8s-deploy.tf -auto-approve'
             }
         }
     }
