@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flask
-        image: 247083573128.dkr.ecr.us-east-1.amazonaws.com/flask:latest
+        image: 307124635785.dkr.ecr.us-east-1.amazonaws.com/flask:latest
         ports:
         - containerPort: 8080
         imagePullPolicy: Always
