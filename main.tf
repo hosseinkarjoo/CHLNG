@@ -242,7 +242,7 @@ resource "aws_elb" "app-lb" {
       healthy_threshold = 2
       unhealthy_threshold = 2
       timeout = 15
-      target = "HTTP:8080/helloworld"
+      target = "HTTP:32000/helloworld"
       interval = 30
   }
 }
