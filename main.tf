@@ -238,6 +238,25 @@ resource "aws_elb" "app-lb" {
   }
 }
   
+##### LB Security Group ######
+resource "aws_security_group" "app-lb" {
+  vpc_id = "${aws_vpc.main_VPC.id}"
+  name = "k8s-api"
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 #####ECR and IAM#####
 resource "aws_ecr_repository" "flask" {
   name = "flask"
