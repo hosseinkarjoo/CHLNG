@@ -216,7 +216,28 @@ resource "aws_instance" "master" {
 
   }
 }
+#### LB ######
+resource "aws_elb" "app-lb" {
+  name = "app-lb"
+  instances = "${aws_instance.worker.*.id}"
+  subnets = ["${aws_subnet.public_subnet.id}"]
+  security_groups = ["${aws_security_group.app-lb.id}"]
+  listener {
+    lb_port = 80
+    lb_protocol = "TCP"
+    instance_port = 32000
+    instance_protocol = "TCP"
+  }
 
+  health_check {
+      healthy_threshold = 2
+      unhealthy_threshold = 2
+      timeout = 15
+      target = "HTTP:8080/helloworld"
+      interval = 30
+  }
+}
+  
 #####ECR and IAM#####
 resource "aws_ecr_repository" "flask" {
   name = "flask"
