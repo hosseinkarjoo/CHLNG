@@ -32,7 +32,7 @@ resource "kubernetes_deployment" "flask" {
           image = "937945817386.dkr.ecr.us-east-1.amazonaws.com/flask:latest"
           name  = "flask"
           port {
-            containerPort = "8080"
+            container_port = "8080"
           }
         }
       }
