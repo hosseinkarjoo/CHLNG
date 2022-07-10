@@ -18,16 +18,12 @@ def helloworld():
 
 @app.route('/versionz')
 def versionz():
-  #getting the latest git hash
-  git_hash = subprocess.run(['git', 'rev-parse', 'HEAD'], stdout=subprocess.PIPE)
-  githash = git_hash.stdout.decode('utf-8').strip()
-  #current directory for repo name
-  pwd_cm = subprocess.run(['pwd'], stdout=subprocess.PIPE)
-  pwd = pwd_cm.stdout.decode('utf-8')
-  project_name = pwd.split("/")
+  #getting the latest git hash from ENV
+  git_hash = subprocess.run(['echo', '$GITHASH'], stdout=subprocess.PIPE)
+  #getting project repo name from ENV
+  project_name = subprocess.run(['echo', '$GITREPO'], stdout=subprocess.PIPE)
   #create a list from data
-  cur_dir = project_name[-1].strip()
-  dict_versionz = {'LatestGitHash': githash, 'ProjectName': cur_dir}
+  dict_versionz = {'LatestGitHash': git_hash, 'ProjectName': project_name}
 
   return {'message': json.dumps(dict_versionz)}
 
