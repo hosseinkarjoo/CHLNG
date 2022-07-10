@@ -22,5 +22,7 @@ def test_versionz(client):
     git_hash = os.getenv('GITHASH')
     project_name = os.getenv('GITREPO')
     assert resp.status_code == 200
-#    assert isinstance(resp.json, dict)
-    assert git_hash + project_name in str(resp.data)
+    assert isinstance(resp.json, dict)
+#    assert git_hash + project_name in str(resp.data)
+    assert resp.json.get('message', "{\"LatestGitHash\": githash, \"ProjectName\": cur_dir}")
+
