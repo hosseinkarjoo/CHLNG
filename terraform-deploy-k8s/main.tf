@@ -50,8 +50,8 @@ resource "kubernetes_service" "flask-svc" {
     }
     session_affinity = "ClientIP"
     port {
-      port        = 32000
-      node_port = 8080
+      port        = 8080
+      node_port = 32000
     }
 
     type = "NodePort"
