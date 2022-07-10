@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Clone Git Project') {
             steps {
-                git url: 'https://github.com/hosseinkarjoo/CHLNG.git', branch: 'K8s'
+                git url: 'https://github.com/hosseinkarjoo/CHLNG.git', branch: 'K8s-terraform'
             }
         }
         stage('build docker image'){
