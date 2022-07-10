@@ -2,7 +2,9 @@ I used AWS Sandboxes for this assignment.
 
 - The first part "a little bit of programing" can be found in branch "http-service"
 
+
 - The second part "CI" can be found in "Docker" branch.  in this part everything is implemented except the last task that says "Save your Docker image somewhere you can retrieve it from later". Because I am using AWS ECR as docker image registry and I have to create them dynamically (sandboxes lives for only 4 hours) and I didn`t go through the process of creating a private registry (nexus or docker-reg) because it wasn`t the part of assignments. However I am building my image in other steps again and then i push them into ECR to pull it later.
+
 
 - The third part is "CD". for presentation purposes I created a script that can be run on Centos 7 to provision an infrastructure for this part on AWS.  I used TF to provision the infrastructure and instances and VPCs and etc.  and used ansible to bring up a Kubernetes cluster with Kubeadm and Jenkins instance to run pipelines. 
 If you need me to present and demo my deployment this script that runs TF and ansible can provision the infrastructure in 20 minutes MAX. 
