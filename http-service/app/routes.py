@@ -4,7 +4,7 @@ import re
 import subprocess
 import json
 import logging
-
+import os
 
 @app.route('/helloworld', methods=['GET'])
 def helloworld():
@@ -19,14 +19,14 @@ def helloworld():
 @app.route('/versionz')
 def versionz():
   #getting the latest git hash from ENV
-  git_hash = subprocess.run(['echo', '$GITHASH'], stdout=subprocess.PIPE)
+  git_hash = os.getenv('GITHASH')
   #getting project repo name from ENV
-  project_name = subprocess.run(['echo', '$GITREPO'], stdout=subprocess.PIPE)
+  project_name = os.getenv('GITREPO')
   #create a list from data
-  dict_versionz = {'LatestGitHash': git_hash, 'ProjectName': project_name}
+#  dict_versionz = {'LatestGitHash': git_hash, 'ProjectName': project_name}
 
-  return {'message': json.dumps(dict_versionz)}
-
+#  return {'message': json.dumps(dict_versionz)}
+  return git_has + project_name
 
 logging.basicConfig(
     format="%(asctime)s %(message)s",
