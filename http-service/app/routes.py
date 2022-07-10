@@ -26,7 +26,7 @@ def versionz():
 #  dict_versionz = {'LatestGitHash': git_hash, 'ProjectName': project_name}
 
 #  return {'message': json.dumps(dict_versionz)}
-  return git_has + project_name
+  return git_hash + project_name
 
 logging.basicConfig(
     format="%(asctime)s %(message)s",
