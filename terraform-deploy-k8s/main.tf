@@ -51,7 +51,7 @@ resource "kubernetes_service" "flask-svc" {
     session_affinity = "ClientIP"
     port {
       port        = 8080
-      node_port = 32000    # publishing the service with NodePort and an aws LB routes the traffic to all replicas
+      node_port = 32000    # publishing the service with NodePort and an aws LB routes the traffic to all replicas 
     }
 
     type = "NodePort"
