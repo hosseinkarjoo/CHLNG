@@ -1,6 +1,6 @@
 Build & RUN
 --------------------------------------------
-- docker build -t flask:latest .
+- docker build --build-arg GITHASH=$(git rev-parse HEAD) --build-arg GITREPO=$(git config --get remote.origin.url) -t flask:latest .
 - docker container run -d --name flask-app -p 8080:8080 flask 
 
 Variables
