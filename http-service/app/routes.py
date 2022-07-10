@@ -23,10 +23,10 @@ def versionz():
   #getting project repo name from ENV
   project_name = os.getenv('GITREPO')
   #create a list from data
-#  dict_versionz = {'LatestGitHash': git_hash, 'ProjectName': project_name}
+  dict_versionz = {'LatestGitHash': git_hash, 'ProjectName': project_name}
 
-#  return {'message': json.dumps(dict_versionz)}
-  return git_hash + project_name
+  return {'message': json.dumps(dict_versionz)}
+#  return git_hash + project_name
 
 logging.basicConfig(
     format="%(asctime)s %(message)s",
