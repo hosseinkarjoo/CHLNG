@@ -1,10 +1,9 @@
 from app import app
 from flask import request
 import re
-import subprocess
+import os
 import json
 import logging
-import os
 
 @app.route('/helloworld', methods=['GET'])
 def helloworld():
@@ -26,7 +25,7 @@ def versionz():
   dict_versionz = {'LatestGitHash': git_hash, 'ProjectName': project_name}
 
   return {'message': json.dumps(dict_versionz)}
-#  return git_hash + project_name
+
 
 logging.basicConfig(
     format="%(asctime)s %(message)s",
