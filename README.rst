@@ -8,7 +8,7 @@ Install requirments and provision Infrastructure on AWS
 
 - you can connect to bstion host with ec2-user@<bastion public ip> and the public key of your local host has been added to the instances.
 
-- create a "pipelne app" and select "pipeline from scm" and give it the Git repository and branch name (K8s-terraform) to pipeline.
+- create a "pipelne app" and select "pipeline from scm" and give it the Git repository and branch name (K8s) to pipeline.
 
 - on the local run : terraform output and take the "ECR address" and the "LB address".
 
