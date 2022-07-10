@@ -1,5 +1,6 @@
 import pytest
 from app import app
+import os
 
 
 @pytest.fixture
@@ -18,6 +19,8 @@ def test_helloworld_name(client):
 
 def test_versionz(client):
     resp = client.get('/versionz')
+    git_hash = os.getenv('GITHASH')
+    project_name = os.getenv('GITREPO')
     assert resp.status_code == 200
     assert isinstance(resp.json, dict)
-    assert resp.json.get('message', "{\"LatestGitHash\": githash, \"ProjectName\": cur_dir}")
+    assert resp.json.get('message', "{\"LatestGitHash\": git_hash, \"ProjectName\": cur_dir}")
