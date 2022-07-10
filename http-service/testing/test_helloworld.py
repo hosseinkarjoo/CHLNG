@@ -20,4 +20,4 @@ def test_versionz(client):
     resp = client.get('/versionz')
     assert resp.status_code == 200
 #    assert isinstance(resp.json, dict)
-    assert b"git_hash + project_name" in resp.data
+    assert b"print(git_hash + project_name)" in resp.data
