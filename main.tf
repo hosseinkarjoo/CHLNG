@@ -143,6 +143,18 @@ resource "aws_security_group" "private" {
     cidr_blocks = ["10.0.0.0/16"]
   }
 
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+
+    security_groups = [
+      "${aws_security_group.app-lb.id}",
+    ]
+}
+
+
+
   egress {
     from_port   = 0
     to_port     = 0
