@@ -46,7 +46,7 @@ pipeline {
                 sh'docker container rm  flask --force'
             }
         }
-        stage('run deployment'){  //checks to see if the deployment exists use a rolling update to re pull the image and update the pods. with new image
+        stage('run deployment'){   //checks to see if the deployment exists use a rolling update to re pull the image and update the pods. with new image
             steps{
                 sh'pwd'
                 sh''' #!/bin/bash
