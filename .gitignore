@@ -2,7 +2,7 @@
 
 *.tfstate
 *.tfstate.*
-
+.terraform*
 override.tf
 override.tf.json
 *_override.tf
@@ -11,3 +11,4 @@ override.tf.json
 variables.tf
 variables.tfe
 aws_creds
+inventory.ini
