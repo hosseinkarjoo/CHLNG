@@ -1,4 +1,5 @@
 import pytest
+import os
 from app import app
 
 
@@ -18,6 +19,8 @@ def test_helloworld_name(client):
 
 def test_versionz(client):
     resp = client.get('/versionz')
+    git_hash = os.getenv('GITHASH')
+    project_name = os.getenv('GITREPO')  
     assert resp.status_code == 200
 #    assert isinstance(resp.json, dict)
     assert git_hash + project_name in resp.data
