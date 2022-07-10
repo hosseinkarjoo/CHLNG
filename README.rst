@@ -7,8 +7,7 @@ I used AWS Sandboxes for this assignment.
 
 
 - The third part is "CD". for presentation purposes I created a script that can be run on Centos 7 to provision an infrastructure for this part on AWS.  I used TF to provision the infrastructure and instances and VPCs and etc.  and used ansible to bring up a Kubernetes cluster with Kubeadm and Jenkins instance to run pipelines. 
-If you need me to present and demo my deployment this script that runs TF and ansible can provision the infrastructure in 20 minutes MAX. 
-It is in two parts, on branch "K8s" it runs a pipeline to Kubernetes with Kubernetes manifests (yml) and the branch "K8s-terraform" deploy to the cluster via terraform. 
+If you need me to present and demo my deployment this script that runs TF and ansible can provision the infrastructure in 20 minutes MAX. It is in two parts, on branch "K8s" it runs a pipeline to Kubernetes with Kubernetes manifests (yml) and the branch "K8s-terraform" deploy to the cluster via terraform. 
 
 I only created a deployment and a Nodeport for my http-service and I didn`t go any further (like Ingress or probes , etc.)  
 But if it is a part of the process and it is necessary please tell me and I will do it ASAP.
