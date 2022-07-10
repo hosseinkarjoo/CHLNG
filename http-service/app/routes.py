@@ -1,7 +1,7 @@
 from app import app
 from flask import request
 import re
-import subprocess
+import os
 import json
 import logging
 
@@ -18,14 +18,12 @@ def helloworld():
 
 @app.route('/versionz')
 def versionz():
-  #getting the latest git hash
-  git_hash = subprocess.run(['git', 'rev-parse', 'HEAD'], stdout=subprocess.PIPE)
-  githash = git_hash.stdout.decode('utf-8').strip()
-  #get repo name
-  project_name = subprocess.run(['git', 'config', '--get', 'remote.origin.url'], stdout=subprocess.PIPE)
+  #getting the latest git hash from ENV
+  git_hash = os.getenv('GITHASH')
+  #getting project repo name from ENV
+  project_name = os.getenv('GITREPO')
   #create a list from data
-  cur_dir = project_name.stdout.decode('utf-8').strip()
-  dict_versionz = {'LatestGitHash': githash, 'ProjectName': cur_dir}
+  dict_versionz = {'LatestGitHash': git_hash, 'ProjectName': project_name}
 
   return {'message': json.dumps(dict_versionz)}
 
