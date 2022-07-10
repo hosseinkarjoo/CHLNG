@@ -6,7 +6,7 @@ Install requirments and provision Infrastructure on AWS
 
 - take the Bastion host public ip address and open it in a browser with port :8080 and configure your jenkins server
 
-- you can connect to bstion host with ec2-user@<bastion public ip> and the public key of your local host has benen added to the instances.
+- you can connect to bstion host with ec2-user@<bastion public ip> and the public key of your local host has been added to the instances.
 
 - create a "pipelne app" and select "pipeline from scm" and give it the Git repository and branch name (K8s-terraform) to pipeline.
 
