@@ -11,7 +11,7 @@ pipeline {
         }
         stage('build docker image'){
             steps{
-                sh'docker build -t ${registry}:${BUILD_NUMBER} -t ${registry}:latest .'
+                sh'docker build --build-arg GITHASH=$(git rev-parse HEAD) --build-arg GITREPO=$(git config --get remote.origin.url) -t ${registry}:${BUILD_NUMBER} -t ${registry}:latest .'
             }
         }
         stage('Stage-RUN'){
