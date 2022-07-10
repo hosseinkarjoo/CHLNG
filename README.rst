@@ -1,8 +1,6 @@
 Install requirments and provision Infrastructure on AWS
 --------------------------------------------
-- run install_req.sh > it asks for access_key and Secret_key of the aws account. this script brings up and provision Infrastructure on aws with TF, configure a Kubernetes cluster with One Master and 3 Workers with Kubeadm via Ansible and install a jenkns server on the Bastion host.
-all the instances are in a private network and only the bastion server has public IP address.
-Bastion host has kubectl(to connect to cluster) and docker.
+- run install_req.sh > it asks for access_key and Secret_key of the aws account. this script brings up and provision Infrastructure on aws with TF, configure a Kubernetes cluster with One Master and 3 Workers with Kubeadm via Ansible and install a jenkns server on the Bastion host.all the instances are in a private network and only the bastion server has public IP address.Bastion host has kubectl(to connect to cluster) and docker.
 
 - after complition run : cat inventory.ini
 
