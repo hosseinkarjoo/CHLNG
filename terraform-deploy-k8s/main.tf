@@ -39,3 +39,22 @@ resource "kubernetes_deployment" "flask" {
     }
   }
 }
+
+resource "kubernetes_service" "flask-svc" {
+  metadata {
+    name = "flask-svc"
+  }
+  spec {
+    selector = {
+      app = "flask"
+    }
+    session_affinity = "ClientIP"
+    port {
+      port        = 32000
+      node_port = 8080
+    }
+
+    type = "NodePort"
+  }
+}
+
